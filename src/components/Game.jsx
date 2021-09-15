@@ -8,7 +8,8 @@ import {calculateWinner, botMind} from "../methods";
 
 import X from '../icons/x.svg';
 import O from '../icons/o.svg';
-import Grid from "../icons/grid.svg";
+
+const MOVE_BUTTON_WIDTH = 0.9 * Dimensions.get('window').width / 5 - 16;
 
 class Game extends React.Component {
   constructor(props) {
@@ -70,43 +71,61 @@ class Game extends React.Component {
   defineStatus(winner) {
     return winner ?
       ((winner === 'X') === this.state.firstIsO) ?
-        <Text className='red'>You lose</Text> :
-        <Text className='green'>You won</Text> :
+        <Text style={styles.redText}>You lose</Text> :
+        <Text style={styles.greenText}>You won</Text> :
       this.state.stepNumber < 9 ? (
-          <View>
-            <Text>Current player:</Text>
-            <View className='little-sign'>{this.state.xIsNext ? <X/> : <O/>}</View>
+          <View style={styles.row}>
+            <Text style={styles.commonText}>Current player:</Text>
+            <View>{this.state.xIsNext ? <X width={30}/> : <O width={30}/>}</View>
           </View>
         ) :
         <Text>Draw</Text>;
   }
 
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+  getMoveButtonStyle(isSelected) {
+    return {
+      width: MOVE_BUTTON_WIDTH,
+      height: 50,
+      marginTop: 8,
+      marginRight: 10,
+      backgroundColor: '#000f44',
+      borderRadius: 5,
+      borderWidth: isSelected ? 2 : 0,
+      borderColor: '#4b74ff',
+      paddingTop: isSelected ? 6 : 8,
+    }
+  }
 
-    const moves = history.slice(1).map(
+  renderMovesButtons() {
+    if (!this.state.history.slice(1).length) return <View height={58}/>
+    return this.state.history.slice(1).map(
       (step, move) => {
         if ((move % 2 === 0) !== this.state.firstIsO) {
           let userMove;
           if (this.state.firstIsO) userMove = (move + 1) / 2;
           else userMove = (move + 2) / 2;
-          const description = 'Move #' + userMove;
-          if (this.state.stepNumber !== move + 1)
-            return (
-              <TouchableOpacity key={move} className='move-button' onClick={() => this.jumpTo(move + 1)}>
-                <Text>{description}</Text>
-              </TouchableOpacity>
-            )
-          else
-            return (
-              <TouchableOpacity key={move} className='move-button selected'>
-                <Text>{description}</Text>
-              </TouchableOpacity>
-            );
+
+          const isSelected = this.state.stepNumber === move + 1;
+
+          return (
+            <TouchableOpacity
+              key={move}
+              disabled={isSelected}
+              style={this.getMoveButtonStyle(isSelected)}
+              onPress={() => this.jumpTo(move + 1)}
+            >
+              <View style={styles.moveContainer}>
+                <Text style={styles.movesText}>{userMove}</Text>
+              </View>
+            </TouchableOpacity>
+          )
         }
       });
+  }
+
+  render() {
+    const current = this.state.history[this.state.stepNumber];
+    const winner = calculateWinner(current.squares);
 
     return (
       <View style={styles.container}>
@@ -117,8 +136,8 @@ class Game extends React.Component {
           />
         </View>
         <View style={styles.movesBarContainer}>
-          <Text>Go to the move:</Text>
-          {moves}
+          <Text style={styles.commonText}>Go to the move:</Text>
+          <View style={styles.row}>{this.renderMovesButtons()}</View>
         </View>
         <View style={styles.statusContainer}>
           {this.defineStatus(winner)}
@@ -146,10 +165,45 @@ const styles = StyleSheet.create({
   },
   movesBarContainer: {
     position: "absolute",
-    top: 0,
+    top: 50,
+    backgroundColor: '#001250',
+    width: '90%',
+    padding: 20,
+    borderRadius: 10,
   },
   statusContainer: {
     position: "absolute",
-    bottom: '20%',
+    bottom: 200,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  commonText: {
+    fontFamily: 'Manjari',
+    color: 'white',
+    fontSize: 20,
+  },
+  redText: {
+    fontFamily: 'Manjari',
+    color: '#cf0000',
+    fontSize: 22,
+  },
+  greenText: {
+    fontFamily: 'Manjari',
+    color: '#00b533',
+    fontSize: 22,
+  },
+  movesText: {
+    fontFamily: 'Manjari',
+    color: 'white',
+    fontSize: 40,
+    textAlign: 'center',
+  },
+  moveContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
   }
 });

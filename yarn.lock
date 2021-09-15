@@ -1139,6 +1139,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/manjari@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/manjari/-/manjari-0.2.0.tgz#95510a713dd9bc9a841c9a62a50042b6175220a3"
+  integrity sha512-TqdPZHCabnXVKA/AmmHlri5CqaLoM1Khs+zT1tA/ibinOFak6S/abN6RgLgiWy581+G+NH9sYLjxswGjKE9kpw==
+
 "@expo/config-plugins@2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-2.0.4.tgz#955fd70a2aeefbe99ec71cecb1d7ea7b626dc79e"
