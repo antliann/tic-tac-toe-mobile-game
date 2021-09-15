@@ -1,19 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View, StatusBar} from 'react-native';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+
+import Grid from './src/icons/grid.svg'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <StatusBar barStyle="light-content" backgroundColor="#000b32"/>
+      </SafeAreaView>
+      <View style={styles.container}>
+        <Grid width="65%" height="65%"/>
+      </View>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000b32',
     alignItems: 'center',
     justifyContent: 'center',
   },
