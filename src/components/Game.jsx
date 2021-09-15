@@ -1,5 +1,6 @@
 import React from "react";
-import {View, Text} from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
+import {Dimensions} from 'react-native';
 
 import {Board} from "./Board";
 
@@ -7,6 +8,7 @@ import {calculateWinner, botMind} from "../methods";
 
 import X from '../icons/x.svg';
 import O from '../icons/o.svg';
+import Grid from "../icons/grid.svg";
 
 class Game extends React.Component {
   constructor(props) {
@@ -70,11 +72,12 @@ class Game extends React.Component {
       ((winner === 'X') === this.state.firstIsO) ?
         <Text className='red'>You lose</Text> :
         <Text className='green'>You won</Text> :
-      this.state.stepNumber < 9 ?
-        [
-          'Current player:',
-          <View className='little-sign'> {this.state.xIsNext ? <X /> : <O />} </View>
-        ] :
+      this.state.stepNumber < 9 ? (
+          <View>
+            <Text>Current player:</Text>
+            <View className='little-sign'>{this.state.xIsNext ? <X/> : <O/>}</View>
+          </View>
+        ) :
         <Text>Draw</Text>;
   }
 
@@ -89,35 +92,35 @@ class Game extends React.Component {
           let userMove;
           if (this.state.firstIsO) userMove = (move + 1) / 2;
           else userMove = (move + 2) / 2;
-          const desc = 'Move #' + userMove;
+          const description = 'Move #' + userMove;
           if (this.state.stepNumber !== move + 1)
             return (
-              <button key={move} className='move-button' onClick={() => this.jumpTo(move + 1)}>
-                {desc}
-              </button>
+              <TouchableOpacity key={move} className='move-button' onClick={() => this.jumpTo(move + 1)}>
+                <Text>{description}</Text>
+              </TouchableOpacity>
             )
           else
             return (
-              <button key={move} className='move-button selected'>
-                {desc}
-              </button>
+              <TouchableOpacity key={move} className='move-button selected'>
+                <Text>{description}</Text>
+              </TouchableOpacity>
             );
         }
       });
 
     return (
-      <View className="game">
-        <View className="game-board">
+      <View style={styles.container}>
+        <View style={styles.boardContainer}>
           <Board
             squares={current.squares}
-            onClick={(i) => this.userClick(i)}
+            onCellPress={(i) => this.userClick(i)}
           />
         </View>
-        <View className="right">
-          <h2>Go to the move:</h2>
+        <View style={styles.movesBarContainer}>
+          <Text>Go to the move:</Text>
           {moves}
         </View>
-        <View className="game-info">
+        <View style={styles.statusContainer}>
           {this.defineStatus(winner)}
         </View>
       </View>
@@ -126,3 +129,27 @@ class Game extends React.Component {
 }
 
 export {Game};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  boardContainer: {
+    flex: 1,
+    width: '67%',
+    height: 0.67 * Dimensions.get('window').width,
+    position: "absolute",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  movesBarContainer: {
+    position: "absolute",
+    top: 0,
+  },
+  statusContainer: {
+    position: "absolute",
+    bottom: '20%',
+  }
+});
