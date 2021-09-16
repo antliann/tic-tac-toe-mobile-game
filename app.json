@@ -1,16 +1,17 @@
 {
   "expo": {
     "name": "tic-tac-toe",
+    "icon": "./src/app-icon.png",
     "slug": "tic-tac-toe",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "ts", "tsx", "svg"]
+    "ios": {
+      "bundleIdentifier": "com.antliann.tictactoe",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.antliann.tictactoe",
+      "versionCode": 1
     },
     "orientation": "portrait"
-  },
-  "name": "tic-tac-toe"
+  }
 }
