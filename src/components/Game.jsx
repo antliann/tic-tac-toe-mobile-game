@@ -10,6 +10,7 @@ import X from '../icons/x.svg';
 import O from '../icons/o.svg';
 
 const MOVE_BUTTON_WIDTH = 0.9 * Dimensions.get('window').width / 5 - 16;
+const BOT_MOVE_TIMEOUT = 600;
 
 class Game extends React.Component {
   constructor(props) {
@@ -22,10 +23,13 @@ class Game extends React.Component {
       xIsNext: true,
       firstIsO: false,
       hardMode: true,
+      gameHasStarted: false,
     };
   }
 
   handleClick(i) {
+    if (!this.state.gameHasStarted) this.setState({gameHasStarted: true});
+
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -49,7 +53,7 @@ class Game extends React.Component {
 
   userClick(i) {
     if (this.handleClick(i))
-      setTimeout(() => this.botMove(), 400);
+      setTimeout(() => this.botMove(), BOT_MOVE_TIMEOUT);
   }
 
   jumpTo(step) {
@@ -97,22 +101,24 @@ class Game extends React.Component {
   }
 
   renderMovesButtons() {
-    if (!this.state.history.slice(1).length) return <View height={58}/>
-    return this.state.history.slice(1).map(
+    console.log(this.state.gameHasStarted);
+    if (!this.state.gameHasStarted) return <View height={58}/>
+
+    return this.state.history.map(
       (step, move) => {
         if ((move % 2 === 0) !== this.state.firstIsO) {
           let userMove;
           if (this.state.firstIsO) userMove = (move + 1) / 2;
           else userMove = (move + 2) / 2;
 
-          const isSelected = this.state.stepNumber === move + 1;
+          const isSelected = this.state.stepNumber === move;
 
           return (
             <TouchableOpacity
               key={move}
               disabled={isSelected}
               style={this.getMoveButtonStyle(isSelected)}
-              onPress={() => this.jumpTo(move + 1)}
+              onPress={() => this.jumpTo(move)}
             >
               <View style={styles.moveContainer}>
                 <Text style={styles.movesText}>{userMove}</Text>
@@ -187,12 +193,12 @@ const styles = StyleSheet.create({
   redText: {
     fontFamily: 'Manjari',
     color: '#cf0000',
-    fontSize: 22,
+    fontSize: 26,
   },
   greenText: {
     fontFamily: 'Manjari',
     color: '#00b533',
-    fontSize: 22,
+    fontSize: 26,
   },
   movesText: {
     fontFamily: 'Manjari',
