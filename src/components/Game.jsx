@@ -11,7 +11,7 @@ import X from '../icons/x.svg';
 import O from '../icons/o.svg';
 
 const MOVE_BUTTON_WIDTH = 0.9 * Dimensions.get('window').width / 6 - 15;
-const BOT_MOVE_TIMEOUT = Platform.OS === 'ios' ? 600 : 3000;
+const BOT_MOVE_TIMEOUT = 600;
 
 class Game extends React.Component {
   constructor(props) {
