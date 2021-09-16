@@ -1,5 +1,5 @@
 import React from "react";
-import {TouchableOpacity, View, Text, StyleSheet} from "react-native";
+import {TouchableOpacity, View, Text, StyleSheet, Platform} from "react-native";
 
 import X from '../icons/x.svg';
 import O from '../icons/o.svg';
@@ -74,7 +74,7 @@ class SettingsBar extends React.Component {
             <Text style={styles.commonText}>Hard</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.justifyCenter}>
+        <View style={styles.newGameButtonContainer}>
           <TouchableOpacity onPress={this.props.newGame}>
             <NewGameIcon />
           </TouchableOpacity>
@@ -117,8 +117,9 @@ const styles = StyleSheet.create({
   alignCenter: {
     alignItems: 'center',
   },
-  justifyCenter: {
+  newGameButtonContainer: {
     justifyContent: 'center',
+    paddingTop: Platform.OS === 'ios' ? 10 : 15,
   },
   noGrow: {
     flex: 0,

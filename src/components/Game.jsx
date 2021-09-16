@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet, Platform} from "react-native";
 import {Dimensions} from 'react-native';
 
 import {Board} from "./Board";
@@ -11,7 +11,7 @@ import X from '../icons/x.svg';
 import O from '../icons/o.svg';
 
 const MOVE_BUTTON_WIDTH = 0.9 * Dimensions.get('window').width / 6 - 15;
-const BOT_MOVE_TIMEOUT = 600;
+const BOT_MOVE_TIMEOUT = Platform.OS === 'ios' ? 600 : 3000;
 
 class Game extends React.Component {
   constructor(props) {
@@ -25,6 +25,7 @@ class Game extends React.Component {
       firstIsO: false,
       hardMode: true,
       gameHasStarted: false,
+      buttonsDisabled: false,
     };
   }
 
@@ -59,7 +60,11 @@ class Game extends React.Component {
 
   userClick(i) {
     if (this.handleClick(i))
-      setTimeout(() => this.botMove(), BOT_MOVE_TIMEOUT);
+      this.setState({buttonsDisabled: true})
+      setTimeout(() => {
+        this.botMove();
+        this.setState({buttonsDisabled: false});
+      }, BOT_MOVE_TIMEOUT);
   }
 
   jumpTo(step, withReset = false) {
@@ -151,6 +156,7 @@ class Game extends React.Component {
           <Board
             squares={current.squares}
             onCellPress={(i) => this.userClick(i)}
+            buttonsDisabled={this.state.buttonsDisabled}
           />
         </View>
         <View style={styles.movesBar}>
@@ -199,7 +205,7 @@ const styles = StyleSheet.create({
   },
   movesBar: {
     position: "absolute",
-    top: 50,
+    top: Platform.OS === 'ios' ? 50 : 5,
     backgroundColor: '#001250',
     width: '90%',
     padding: 20,

@@ -26,6 +26,7 @@ class Board extends React.Component {
         <TouchableOpacity
           onPress={onCellPress}
           key={'square' + i}
+          disabled={this.props.buttonsDisabled}
         >
           {this.renderIcon(this.props.squares[i])}
         </TouchableOpacity>
