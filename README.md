@@ -4,7 +4,8 @@
 
 # How to run the app:
 
-### To run the app on android, install `builds/android/tic-tac-toe.apk` on your phone
+### To run the app on Android, install build from `builds/android/` on your phone
+### To run the app on iOS (simulator), install build from `builds/ios/` on your simulator
 
 
 ### To run the app online on any mobile OS you can open this link: https://expo.dev/@antliann/tic-tac-toe
