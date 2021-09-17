@@ -1,6 +1,6 @@
 ### This is an interactive Tic-Tac-Toe mobile game (against bot) with 2 types of difficulty.
 
-<img src="./img_1.png" alt="screenshot" width="400"/>
+<img src="./screenshot.png" alt="screenshot" width="400"/>
 
 # How to run the app:
 
