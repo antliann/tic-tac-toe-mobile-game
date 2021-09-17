@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {StyleSheet, TouchableWithoutFeedback, View} from "react-native";
 import {Dimensions} from "react-native";
 
 import X from '../icons/x.svg';
@@ -23,13 +23,13 @@ class Board extends React.Component {
     const onCellPress = () => this.props.onCellPress(i);
     return (
       <View style={styles.cellContainer}>
-        <TouchableOpacity
+        <TouchableWithoutFeedback
           onPress={onCellPress}
           key={'square' + i}
-          disabled={this.props.buttonsDisabled}
+          disabled={this.props.buttonsDisabled || !!this.props.squares[i]}
         >
           {this.renderIcon(this.props.squares[i])}
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
