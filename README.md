@@ -1,27 +1,10 @@
-### This is an interactive Tic-Tac-Toe mobile game (against bot) with 2 types of difficulty.
+#### This is an interactive Tic-Tac-Toe mobile game (against bot) with 2 types of difficulty.
+To run the app in Expo Go you can open this link: https://expo.dev/@antliann/tic-tac-toe
 
-<img src="./screenshot.png" alt="screenshot" width="400"/>
+<img src="./screenshot.png" alt="screenshot" width="200" style="align-self: center" />
 
-# How to run the app:
+Easy mode - bot's moves are mostly random
 
-### To run the app on Android, install build from `builds/android/` on your phone
-### To run the app on iOS (simulator), install build from `builds/ios/` on your simulator
+Hard mode - you will never win :)
 
-
-### To run the app online on any mobile OS you can open this link: https://expo.dev/@antliann/tic-tac-toe
-#### (you will need to install Expo Go on your phone)
-
-
-### If you want to run/build the project on your PC:
-
-#### Run this commands in the project directory:
-1) Download all dependencies by running `npm install`
-2) Do one of this:
-    - run `expo start` in project folder
-    - build project from `ios` folder in Xcode
-    - build project from `android` folder in Android Studio
-
-
-\
-P.S. If Node.js is not installed on your PC, download it from
-https://nodejs.org/en/download/
+**P.S.** `Me from 2022:` I know that this project contains some ugly code, sorry, I was young and inexperienced :)
